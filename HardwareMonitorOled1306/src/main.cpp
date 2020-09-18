@@ -19,15 +19,14 @@ void setup()
   wifiManager.setTimeout(30);
   display.clear();
   display.setFont(ArialMT_Plain_10);
-  display.drawString(0, 0, "Connecting to wifi");
+  display.drawString(0, 0, "Waiting for wifi");
   display.display();
   if (!wifiManager.autoConnect("MCU"))
   {
     display.clear();
     display.drawString(0, 10, "Restart esp and");
-    display.drawString(0, 20, "connect to wiFi MCU");
-    display.drawString(0, 30, "to config new wiFi");
-    
+    display.drawString(0, 20, "connect to wifi MCU");
+    display.drawString(0, 30, "to config new wifi");
     display.display();
   }
   
