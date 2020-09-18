@@ -10,7 +10,7 @@ const int reset = D3;
 WiFiServer server(80);
 WiFiManager wifiManager;
 WiFiClient client;
-SSD1306Wire display(0x3c, D2, D1);
+SSD1306Wire display(0x3C, D2, D1);
 int getBarsSignal(long rssi)
 {
     int bars;

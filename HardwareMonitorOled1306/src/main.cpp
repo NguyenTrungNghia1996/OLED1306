@@ -1,4 +1,6 @@
-#include <Arduino.h>
+#include <Ticker.h>
+Ticker flip;
+Ticker tick;
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <DNSServer.h>
@@ -7,30 +9,32 @@
 #include <Wire.h>
 #include "SSD1306Wire.h"
 #include "data.h"
-#include <Ticker.h>
 #include <time.h>
-Ticker flip;
 void setup()
 {
   Serial.begin(115200);
   pinMode(reset, INPUT_PULLUP);
   display.init();
   display.flipScreenVertically();
+  wifiManager.setTimeout(30);
   display.clear();
   display.setFont(ArialMT_Plain_10);
-  display.drawString(0, 0, "Connecting to WiFi");
+  display.drawString(0, 0, "Connecting to wifi");
   display.display();
-  display.clear();
-  display.drawString(0, 0, "Connection Fail");
-  display.drawString(0, 10, "Connect to WiFi MCU");
-  display.drawString(0, 20, "with password 123456789");
-  display.drawString(0, 30, "to config new WiFi");
-  display.display();
-  wifiManager.autoConnect("MCU", "123456789");
+  if (!wifiManager.autoConnect("MCU"))
+  {
+    display.clear();
+    display.drawString(0, 10, "Restart esp and");
+    display.drawString(0, 20, "connect to wiFi MCU");
+    display.drawString(0, 30, "to config new wiFi");
+    
+    display.display();
+  }
+  
   server.begin();
   configTime(7 * 3600, 0, "pool.ntp.org", "time.nist.gov");
   while (nam.toInt() < 2000)
-  {
+  { 
     capNhatThoiGian();
     delay(50);
   }
