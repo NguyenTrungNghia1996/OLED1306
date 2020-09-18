@@ -10,30 +10,36 @@ Ticker tick;
 #include "SSD1306Wire.h"
 #include "data.h"
 #include <time.h>
+void configModeCallback(WiFiManager *myWiFiManager)
+{
+  display.clear();
+  display.drawString(0, 10, "Restart esp and");
+  display.drawString(0, 20, "connect to wifi" + myWiFiManager->getConfigPortalSSID());
+  display.drawString(0, 30, "to config new wifi");
+  display.display();
+}
 void setup()
 {
   Serial.begin(115200);
   pinMode(reset, INPUT_PULLUP);
   display.init();
   display.flipScreenVertically();
-  wifiManager.setTimeout(30);
   display.clear();
   display.setFont(ArialMT_Plain_10);
   display.drawString(0, 0, "Waiting for wifi");
   display.display();
-  if (!wifiManager.autoConnect("MCU"))
+
+  wifiManager.setAPCallback(configModeCallback);
+  if (!wifiManager.autoConnect())
   {
-    display.clear();
-    display.drawString(0, 10, "Restart esp and");
-    display.drawString(0, 20, "connect to wifi MCU");
-    display.drawString(0, 30, "to config new wifi");
-    display.display();
+    ESP.reset();
+    delay(1000);
   }
-  
+
   server.begin();
   configTime(7 * 3600, 0, "pool.ntp.org", "time.nist.gov");
   while (nam.toInt() < 2000)
-  { 
+  {
     capNhatThoiGian();
     delay(50);
   }
