@@ -6,11 +6,15 @@ String ngayTrongTuan, thang, ngay, gio, phut, giay, nam;
 int hour, minute, sec;
 int timer = 0, demFlash, matKetNoiWiFi;
 bool lanDauMoApp = true, ketNoiApp, doiWiFi;
-const int reset = D3;
 WiFiServer server(80);
 WiFiManager wifiManager;
 WiFiClient client;
+#ifdefined(ESP8266)
 SSD1306Wire display(0x3C, D2, D1);
+const int reset = D3;
+#else
+SSD1306Wire display(0x3C, 22, 21);
+const int reset = 10;
 int getBarsSignal(long rssi)
 {
     int bars;
@@ -82,9 +86,9 @@ void wifi()
             s = String(sec);
         }
         String sp = h + ":" + m + ":" + s;
-        display.drawString(5, 0, sp);
+        display.drawString(2, 0, sp);
         display.setFont(ArialMT_Plain_16);
-        String st = ngayTrongTuan + " / " + ngay + " / " + thang + " / " + String(nam);
+        String st = ngayTrongTuan + " " + ngay + " / " + thang + " / " + String(nam);
         display.drawString(0, 30, st);
     }
     else
@@ -157,7 +161,7 @@ void getData()
                 display.setFont(ArialMT_Plain_16);
                 display.drawString(85, 18, gpuTemp);
                 display.setFont(ArialMT_Plain_16);
-                display.drawString(37, 34, net + "Mb/s");
+                display.drawString(37, 34, net);
             }
         }
     }

@@ -13,8 +13,9 @@ Ticker tick;
 void configModeCallback(WiFiManager *myWiFiManager)
 {
   display.clear();
-  display.drawString(0, 10, "Restart esp and");
-  display.drawString(0, 20, "connect to wifi" + myWiFiManager->getConfigPortalSSID());
+  display.drawString(0, 0, "Connection failed !!!");
+  display.drawString(0, 10, "connect to wifi");
+  display.drawString(0, 20, myWiFiManager->getConfigPortalSSID());
   display.drawString(0, 30, "to config new wifi");
   display.display();
 }
