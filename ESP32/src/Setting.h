@@ -13,6 +13,7 @@ int ONE_WIRE_BUS = 32;
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 float temp;
+
 void Battery()
 {
         int raw = analogRead(BatteryPIN);

@@ -9,12 +9,8 @@ bool lanDauMoApp = true, ketNoiApp, doiWiFi;
 WiFiServer server(80);
 WiFiManager wifiManager;
 WiFiClient client;
-#ifdefined(ESP8266)
 SSD1306Wire display(0x3C, D2, D1);
 const int reset = D3;
-#else
-SSD1306Wire display(0x3C, 22, 21);
-const int reset = 10;
 int getBarsSignal(long rssi)
 {
     int bars;
