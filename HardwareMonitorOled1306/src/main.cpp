@@ -1,6 +1,5 @@
 #include <Ticker.h>
 Ticker flip;
-Ticker tick;
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <DNSServer.h>
