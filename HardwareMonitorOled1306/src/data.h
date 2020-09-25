@@ -4,7 +4,7 @@ String cpuName, cpuLoad, cpuTemp, ramLoad, gpuName, gpuLoad, gpuTemp, net;
 String oldCPULoad, oldCPUTemp, oldRAMLoad, oldGPULoad, oldGPUTemp, oldNet;
 String ngayTrongTuan, thang, ngay, gio, phut, giay, nam;
 int hour, minute, sec;
-int timer = 0, demFlash, matKetNoiWiFi;
+int timer = 0, demFlash=0, matKetNoiWiFi;
 bool lanDauMoApp = true, ketNoiApp, doiWiFi;
 WiFiServer server(80);
 WiFiManager wifiManager;
@@ -88,14 +88,15 @@ void wifi()
         display.drawString(0, 30, st);
     }
     else
-    {
+    {   
+        display.setFont(ArialMT_Plain_10);
         display.drawString(0, 54, "There is no connection!");
     }
-    if (digitalRead(reset) == LOW)
-    {
-        wifiManager.resetSettings();
-        ESP.restart();
-    }
+    //if (digitalRead(reset) == LOW)
+    //{
+    //    wifiManager.resetSettings();
+   //     ESP.restart();
+   // }
 }
 void border()
 {
@@ -213,7 +214,16 @@ void capNhatThoiGian()
     sec = giay.toInt();
 }
 void ngat()
-{
+{   
+    if (digitalRead(reset) == LOW)
+    {
+        demFlash++;
+    }
+    if(demFlash>20){
+        wifiManager.resetSettings();
+        demFlash =0;
+        ESP.restart();
+    }
     sec++;
     if (sec == 60)
     {
