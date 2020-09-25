@@ -84,7 +84,7 @@ void wifi()
         String sp = h + ":" + m + ":" + s;
         display.drawString(2, 0, sp);
         display.setFont(ArialMT_Plain_16);
-        String st = ngayTrongTuan + " " + ngay + " / " + thang + " / " + String(nam);
+        String st = ngayTrongTuan + " " + ngay + "/" + thang + "/" + String(nam);
         display.drawString(0, 30, st);
     }
     else
